@@ -1,13 +1,14 @@
 package net.blurblah.notiboy.mailsender.provider;
 
-import net.blurblah.notiboy.config.Config;
-import net.blurblah.notiboy.log.SLog;
-import net.blurblah.notiboy.mailsender.model.MailContent;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import net.blurblah.notiboy.config.Config;
+import net.blurblah.notiboy.mailsender.model.MailContent;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.Iterator;
 @Service
 public class MailgunProvider implements MailProvider {
 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	@Value("${mailgun.domain}")
 	private String mailgunDomain;
 	@Value("${mailgun.apikey}")
@@ -35,13 +37,13 @@ public class MailgunProvider implements MailProvider {
 		
 		try {
 			if(!content.isParsed()){
-				SLog.d("json parse error", content.getErrorMessage());
-				SLog.d("jsonRequest", jsonRequest);
+				log.debug("json parse error", content.getErrorMessage());
+				log.debug("jsonRequest", jsonRequest);
 				return result.put("error", content.getErrorMessage()).toString();
 			}
 
 			String requestUrl = String.format(Config.mailgunUriFormat, mailgunDomain);
-			SLog.d("Request url(to mailgun)", requestUrl);
+			log.debug("Request url(to mailgun)", requestUrl);
 			
 			if(mailgunKey == null)
 				return result.put("error", "mailgun_api_key not exist context param.(web.xml)").toString();
@@ -54,7 +56,7 @@ public class MailgunProvider implements MailProvider {
 				
 				//File file = new File(Config.formatPath + messageFormatFile); //ex : codealley_invite.html
 				File file = new File(context.getRealPath("/" + Config.formatPath + "/" + messageFormatFile));
-				SLog.d("Message file path : " + file.getAbsolutePath());
+				log.debug("Message file path : " + file.getAbsolutePath());
 				FileReader reader = new FileReader(file);
 				char[] chars = new char[(int) file.length()];
 				reader.read(chars);
@@ -71,12 +73,12 @@ public class MailgunProvider implements MailProvider {
 						value = params.getString(key);
 						
 						// paramter format : ###[parameter]###  
-						SLog.d("parameter", key + " : " + value);
+						log.debug("parameter", key + " : " + value);
 						message = message.replace(String.format(Config.paramFormat, key), value);
 					}
 				}
-				
-				SLog.d(messageFormatFile, message);
+
+				log.debug(messageFormatFile, message);
 			} else {
 				message = content.getMessage_content();
 			}
@@ -89,7 +91,7 @@ public class MailgunProvider implements MailProvider {
 					.field(content.getMessage_type().toLowerCase(), message)
 					.asString();
 
-			SLog.d("Response(from mailgun)", jsonResponse.getBody().toString());
+			log.debug("Response(from mailgun)", jsonResponse.getBody().toString());
 
 			/** Response Sample (from mailgun)
 			 * {

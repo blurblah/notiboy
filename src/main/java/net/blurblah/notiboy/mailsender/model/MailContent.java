@@ -1,13 +1,15 @@
 package net.blurblah.notiboy.mailsender.model;
 
 
-import net.blurblah.notiboy.log.SLog;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class MailContent {
 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private boolean isParsed = false;
 	private String errorMessage;
 	
@@ -23,7 +25,7 @@ public class MailContent {
 	
 	
 	public MailContent(String jsonContent){
-		
+
 		try{
 			JSONObject obj = new JSONObject(jsonContent);
 			
@@ -38,14 +40,14 @@ public class MailContent {
 			
 			isParsed = true;
 			
-			SLog.d("project", 				project);
-			SLog.d("from", 					from);
-			SLog.d("to", 					to);
-			SLog.d("subject",				subject);
-			SLog.d("message_type",			message_type);
-			SLog.d("message_format_file",	message_format_file);
-			SLog.d("message_content",		message_content);
-			SLog.d("message_param", 		message_param != null ? message_param.toString() : null );
+			log.debug("project", 				project);
+			log.debug("from", 					from);
+			log.debug("to", 					to);
+			log.debug("subject",				subject);
+			log.debug("message_type",			message_type);
+			log.debug("message_format_file",	message_format_file);
+			log.debug("message_content",		message_content);
+			log.debug("message_param", 		message_param != null ? message_param.toString() : null );
 			
 			
 		}catch(JSONException e){
