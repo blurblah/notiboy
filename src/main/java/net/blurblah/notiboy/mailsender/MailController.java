@@ -1,8 +1,8 @@
-package net.blurblah.notiboy.mailsender.rest;
+package net.blurblah.notiboy.mailsender;
 
 
 import net.blurblah.notiboy.mailsender.MailRequest;
-import net.blurblah.notiboy.mailsender.provider.MailProvider;
+import net.blurblah.notiboy.mailsender.MailProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package net.blurblah.notiboy.mailsender.provider;
+package net.blurblah.notiboy.mailsender;
 
 import net.blurblah.notiboy.mailsender.MailRequest;
 

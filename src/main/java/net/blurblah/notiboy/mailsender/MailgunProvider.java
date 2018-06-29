@@ -1,10 +1,9 @@
-package net.blurblah.notiboy.mailsender.provider;
+package net.blurblah.notiboy.mailsender;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import net.blurblah.notiboy.config.Config;
-import net.blurblah.notiboy.mailsender.MailRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
