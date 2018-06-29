@@ -36,12 +36,10 @@ JSON Sample :
 
 ```json
 {
-    "project":"sample",
     "from":"info<info@blurblah.net>",
     "to":"blurblah@blurblah.net",
     "subject":"Hello, notiboy",	
-    "message_type":"text",
-    "message_content":"Hi"
+    "content":"Hi"
 }
 ```
 #### 2. Slack notification

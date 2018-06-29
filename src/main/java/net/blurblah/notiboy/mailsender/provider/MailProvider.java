@@ -1,7 +1,7 @@
 package net.blurblah.notiboy.mailsender.provider;
 
-import javax.servlet.ServletContext;
+import net.blurblah.notiboy.mailsender.MailRequest;
 
 public interface MailProvider {
-	String request(ServletContext context, String jsonRequest);
+	String send(MailRequest request);
 }

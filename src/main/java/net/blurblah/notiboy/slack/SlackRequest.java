@@ -1,7 +1,6 @@
 package net.blurblah.notiboy.slack;
 
-import org.hibernate.validator.constraints.NotBlank;
-
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class SlackRequest {
