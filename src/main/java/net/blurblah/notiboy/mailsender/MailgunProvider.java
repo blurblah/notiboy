@@ -2,9 +2,8 @@ package net.blurblah.notiboy.mailsender;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import net.blurblah.notiboy.common.Result;
 import net.blurblah.notiboy.config.Config;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,54 +20,40 @@ public class MailgunProvider implements MailProvider {
 	private String mailgunKey;
 
 	@Override
-	public String send(MailRequest request) {
+	public Result send(MailRequest request) {
 
-		/** Response Sample (from mailgun)
-		 * {
-		 		"id": "<20150507095740.11928.11889@codealley.inslab.co.kr>",
-				"message": "Queued. Thank you."
-		   }
-		 */
-		JSONObject result = new JSONObject();
-		HttpResponse<String> jsonResponse = null;
-		
+		String requestUrl = String.format(Config.mailgunUriFormat, mailgunDomain);
+		log.debug("Request url : ", requestUrl);
+		Result r = new Result("ok");
+
 		try {
-			String requestUrl = String.format(Config.mailgunUriFormat, mailgunDomain);
-			log.debug("Request url : ", requestUrl);
-			
-			jsonResponse = Unirest.post(requestUrl)
-					.basicAuth("api", mailgunKey)
-					.field("from", request.getFrom())
-					.field("to", request.getTo())
-					.field("subject", request.getSubject())
-					.field(request.getType().toLowerCase(), request.getContent())
-					.asString();
+			HttpResponse<String> response = Unirest.post(requestUrl)
+												.basicAuth("api", mailgunKey)
+												.field("from", request.getFrom())
+												.field("to", request.getTo())
+												.field("subject", request.getSubject())
+												.field(request.getType().toLowerCase(), request.getContent())
+												.asString();
+			/**
+			 * Response sample from mailgun
+			 * {
+			 *     "id": "<20150507095740.11928.11889@notiboy.blurblah.net>",
+			 *     "message": "Queued. Thank you."
+			 * }
+			 */
+			log.info("Response : ", response.getBody().toString());
 
-			log.debug("Response : ", jsonResponse.getBody().toString());
-
-
-			JSONObject mailgun = new JSONObject(jsonResponse.getBody().toString());
-			if(mailgun.has("id")) {
-				result.put("result", true);
-				result.put("id", mailgun.getString("id"));
+			JSONObject responseObject = new JSONObject(response.getBody().toString());
+			if(response.getStatus() == 200) {
+				r.setMessage(responseObject.getString("id"));
 			} else {
-				result.put("result", false);
-				result.put("error", jsonResponse.getBody().toString());
+				r.setStatus("not_ok");
+				r.setMessage(responseObject.toString());
 			}
-				
-		} catch (UnirestException | JSONException e) {
-			e.printStackTrace();
-			try {
-				result.put("result", false);
-				if( jsonResponse != null )
-					result.put("error", jsonResponse.getBody().toString());
-				else
-					result.put("error", e.getMessage());
-			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			return r;
+		} catch(Exception e) {
+			log.error(e.getMessage());
+			return new Result("not_ok", e.getMessage());
 		}
-		return result.toString();
 	}
 }

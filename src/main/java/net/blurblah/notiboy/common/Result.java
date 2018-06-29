@@ -1,4 +1,4 @@
-package net.blurblah.notiboy.slack;
+package net.blurblah.notiboy.common;
 
 public class Result {
     private String status;

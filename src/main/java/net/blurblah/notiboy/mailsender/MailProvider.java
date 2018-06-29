@@ -1,7 +1,7 @@
 package net.blurblah.notiboy.mailsender;
 
-import net.blurblah.notiboy.mailsender.MailRequest;
+import net.blurblah.notiboy.common.Result;
 
 public interface MailProvider {
-	String send(MailRequest request);
+	Result send(MailRequest request);
 }
