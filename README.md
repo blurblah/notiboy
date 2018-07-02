@@ -55,20 +55,11 @@ Method : POST
 
 Request header : Content-Type: application/json
 
-JSON samples #1 :
+JSON sample :
 
 ```json
 {
-    "channel": "#general",
+    "channel": "general",
     "message": "Hello"
-}
-```
-
-JSON samples #2 (direct message) :
-
-```json
-{
-    "channel": "@friend1",
-    "message": "Hi"
 }
 ```
