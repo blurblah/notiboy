@@ -11,15 +11,21 @@ notiboy can notify to users through email or slack.
 
 #### Packaging
 
+```bash
 mvn clean package
+```
 
 #### Docker image
 
+```bash
 mvn dockerfile:build
+```
 
 ### How to run
 
+```bash
 java -jar notiboy-0.1.jar
+```
 
 ### How to use APIs
 
