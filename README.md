@@ -17,13 +17,9 @@ mvn clean package
 
 mvn dockerfile:build
 
----
-
 ### How to run
 
 java -jar notiboy-0.1.jar
-
----
 
 ### How to use APIs
 
@@ -39,7 +35,7 @@ JSON Sample :
 ```json
 {
     "from": "info<info@blurblah.net>",
-    "to": [
+    "recipients": [
         "blurblah@blurblah.net"
     ],
     "subject": "Hello, notiboy",	
