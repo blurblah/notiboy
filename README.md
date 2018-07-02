@@ -32,14 +32,18 @@ http://localhost:8080/mail
 
 Method : POST
 
+Request header : Content-Type: application/json
+
 JSON Sample :
 
 ```json
 {
-    "from":"info<info@blurblah.net>",
-    "to":"blurblah@blurblah.net",
-    "subject":"Hello, notiboy",	
-    "content":"Hi"
+    "from": "info<info@blurblah.net>",
+    "to": [
+        "blurblah@blurblah.net"
+    ],
+    "subject": "Hello, notiboy",	
+    "content": "Hi"
 }
 ```
 #### 2. Slack notification
@@ -49,11 +53,20 @@ Method : POST
 
 Request header : Content-Type: application/json
 
-JSON sample :
+JSON samples #1 :
 
 ```json
 {
     "channel": "#general",
     "message": "Hello"
+}
+```
+
+JSON samples #2 (direct message) :
+
+```json
+{
+    "channel": "@friend1",
+    "message": "Hi"
 }
 ```

@@ -1,6 +1,7 @@
 package net.blurblah.notiboy.mailsender;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class MailRequest {
@@ -11,8 +12,8 @@ public class MailRequest {
     @NotBlank
     private String from;
     @NotNull
-    @NotBlank
-    private String to;
+    @NotEmpty
+    private String[] recipients;
     @NotNull
     private String subject;
     @NotNull
@@ -22,8 +23,8 @@ public class MailRequest {
         return from;
     }
 
-    public String getTo() {
-        return to;
+    public String[] getRecipients() {
+        return recipients;
     }
 
     public String getSubject() {

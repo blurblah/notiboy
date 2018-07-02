@@ -1,4 +1,4 @@
-mailgun.domain = YOUR.MAILGUN.DOMAIN
+mailgun.endpoint = MAILGUN.ENDPOINT.WITH.YOUR.DOMAIN
 mailgun.apikey = YOUR.MAILGUN.KEY
 
 slack.token = YOUR.SLACK.TOKEN
