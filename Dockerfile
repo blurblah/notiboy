@@ -1,7 +1,19 @@
 FROM openjdk:8-jdk-alpine
 LABEL maintainer="blurblah@blurblah.net"
 
+ENV MAILGUN_ENDPOINT MAILGUN_ENDPOINT_WITH_YOUR_DOMAIN
+ENV MAILGUN_APIKEY YOUR_MAILGUN_KEY
+ENV SLACK_NAME notiboy
+ENV SLACK_EMOJI :monkey_face:
+ENV SLACK_OAUTH_TOKEN YOUR_SLACK_OAUTH_ACCESS_TOKEN
+
 ARG JAR_FILE
 ADD ${JAR_FILE} app.jar
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+ENTRYPOINT ["java", "-jar", "-DMAILGUN_ENDPOINT=${MAILGUN_ENDPOINT}", \
+            "-DMAILGUN_APIKEY=${MAILGUN_APIKEY}", \
+            "-DSLACK_NAME=${SLACK_NAME}", \
+            "-DSLACK_EMOJI=${SLACK_EMOJI}", \
+            "-DSLACK_OAUTH_TOKEN=${SLACK_OAUTH_TOKEN}", \
+            "/app.jar"]
