@@ -1,21 +1,31 @@
 
-## notiboy
+# notiboy
 
 HTTP API service for the notifications.
 
 notiboy can notify to users through email or slack. 
 
----
+### Prerequisites
+
+1. Mailgun api key : Sign-in to [Mailgun](https://www.mailgun.com/)
+and issue a api key
+
+2. Slack oauth access token : Create a slack app
+through this [link](https://api.slack.com/apps?new_app=1)
+if you don't have it and generate oauth token.
+
+3. Slack app permissions : Should be granted some permissions, **channels:read**,
+**chat:write:bot** and **groups:read**.
 
 ### How to build
 
-#### Packaging
+#### 1. Packaging
 
 ```bash
 mvn clean package
 ```
 
-#### Docker image
+#### 2. Docker image
 
 ```bash
 mvn dockerfile:build
