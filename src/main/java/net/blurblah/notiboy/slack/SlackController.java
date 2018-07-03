@@ -67,13 +67,17 @@ public class SlackController {
             log.error(e.getMessage() + " : " + request.getChannel());
             result.setStatus("not_ok");
             result.setMessage(e.getMessage() + " : " + request.getChannel());
+        } catch (NullPointerException e) {
+            log.error(e.getClass().getSimpleName());
+            result.setStatus("not_ok");
+            result.setMessage(e.getClass().getSimpleName());
         }
 
         return result;
     }
 
     private String findChannel(String token, String channelName)
-            throws IOException, SlackApiException, NoSuchElementException {
+            throws IOException, SlackApiException, NoSuchElementException, NullPointerException {
         Gson gson = new Gson();
         try {
             Channel pub = findPublicChannel(token, channelName);
@@ -89,17 +93,16 @@ public class SlackController {
     }
 
     private Channel findPublicChannel(String token, String channelName)
-            throws IOException, SlackApiException, NoSuchElementException {
+            throws IOException, SlackApiException, NoSuchElementException, NullPointerException {
         Slack slack = Slack.getInstance();
         ChannelsListResponse channels = slack.methods().channelsList(
                 ChannelsListRequest.builder().token(token).build());
         return channels.getChannels().stream()
                 .filter(c -> c.getName().equals(channelName)).findFirst().get();
-
     }
 
     private Group findPrivateChannel(String token, String channelName)
-            throws IOException, SlackApiException, NoSuchElementException {
+            throws IOException, SlackApiException, NoSuchElementException, NullPointerException {
         Slack slack = Slack.getInstance();
         GroupsListResponse groups = slack.methods().groupsList(
                 GroupsListRequest.builder().token(token).build());

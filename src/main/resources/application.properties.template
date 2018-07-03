@@ -1,6 +1,0 @@
-mailgun.endpoint = MAILGUN_ENDPOINT_WITH_YOUR_DOMAIN
-mailgun.apikey = YOUR_MAILGUN_KEY
-
-slack.name = notiboy
-slack.emoji = :monkey_face:
-slack.oauth.token = YOUR_SLACK_OAUTH_ACCESS_TOKEN
