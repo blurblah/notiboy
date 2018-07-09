@@ -65,7 +65,7 @@ Method : POST
 
 Request header : Content-Type: application/json
 
-JSON sample :
+JSON sample#1 (basic) :
 
 ```json
 {
@@ -74,3 +74,29 @@ JSON sample :
 }
 ```
 
+JSON sample#2 (support attachments) :
+```json
+{
+    "channel": "test_channel",
+    "message": "",
+    "attachments": [
+    	{
+            "fallback": "Reported 2018-07-05 5:52:03 PM",
+            "author_name": "Slack Tester",
+            "color": "danger",
+            "title": "<!date^1530813123^Reported {date_num} {time_secs}|Reported 2018-07-05 5:52:03 PM>",
+            "text": "sample message",
+            "fields": [
+                {
+                    "title": "sample_field",
+                    "value": "sample_value",
+                    "short": false
+                }
+            ],
+            "footer": "Slack API",
+            "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+            "ts": 1530813123
+        }
+    ]
+}
+```
